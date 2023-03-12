@@ -19,38 +19,20 @@ public class UserController {
 
     @GetMapping("/admin/all")
     public ResponseEntity<?> getUsers(@RequestBody User user) {
-        User foundUser = userService.findUserByCredentials(user.getUserName(), user.getPasswordHash());
-        if(foundUser.getLoggedIn().equals(Boolean.FALSE)) {
-            return new ResponseEntity<>("User is not logged in", HttpStatus.BAD_REQUEST);
-        }
-        if(!foundUser.getUserType().equals(UserType.ADMIN)) {
-            return new ResponseEntity<>("User does not have permissions", HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>(userService.findUsers(), HttpStatus.OK);
+        Pair<?, HttpStatus> pair = userService.findUsers(user);
+        return new ResponseEntity<>(pair.getFirst(), pair.getSecond());
     }
 
     @GetMapping("/admin/admins")
     public ResponseEntity<?> getAdmins(@RequestBody User user) {
-        User foundUser = userService.findUserByCredentials(user.getUserName(), user.getPasswordHash());
-        if(foundUser.getLoggedIn().equals(Boolean.FALSE)) {
-            return new ResponseEntity<>("User is not logged in", HttpStatus.BAD_REQUEST);
-        }
-        if(!foundUser.getUserType().equals(UserType.ADMIN)) {
-            return new ResponseEntity<>("User does not have permissions", HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>(userService.findAdmins(), HttpStatus.OK);
+        Pair<?, HttpStatus> pair = userService.findAdmins(user);
+        return new ResponseEntity<>(pair.getFirst(), pair.getSecond());
     }
 
     @GetMapping("/admin/cashiers")
     public ResponseEntity<?> getCashiers(@RequestBody User user) {
-        User foundUser = userService.findUserByCredentials(user.getUserName(), user.getPasswordHash());
-        if(foundUser.getLoggedIn().equals(Boolean.FALSE)) {
-            return new ResponseEntity<>("User is not logged in", HttpStatus.BAD_REQUEST);
-        }
-        if(!foundUser.getUserType().equals(UserType.ADMIN)) {
-            return new ResponseEntity<>("User does not have permissions", HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>(userService.findCashiers(), HttpStatus.OK);
+        Pair<?, HttpStatus> pair = userService.findCashiers(user);
+        return new ResponseEntity<>(pair.getFirst(), pair.getSecond());
     }
 
     @PutMapping("/admin/update")

@@ -19,16 +19,40 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public List<User> findUsers() {
-        return userRepository.findAll();
+    public Pair<?, HttpStatus> findUsers(User user) {
+        User foundUsers = findUserByCredentials(user.getUserName(), user.getPasswordHash());
+        if(foundUsers.getLoggedIn().equals(Boolean.FALSE)) {
+            return Pair.of("User is not logged in", HttpStatus.BAD_REQUEST);
+        }
+        if(!foundUsers.getUserType().equals(UserType.ADMIN)) {
+            return Pair.of("User does not have permissions", HttpStatus.BAD_REQUEST);
+        }
+
+        return Pair.of(userRepository.findAll(), HttpStatus.OK);
     }
 
-    public List<User> findAdmins() {
-        return userRepository.findUserByUserType(UserType.ADMIN);
+    public Pair<?, HttpStatus> findAdmins(User user) {
+        User foundUsers = findUserByCredentials(user.getUserName(), user.getPasswordHash());
+        if(foundUsers.getLoggedIn().equals(Boolean.FALSE)) {
+            return Pair.of("User is not logged in", HttpStatus.BAD_REQUEST);
+        }
+        if(!foundUsers.getUserType().equals(UserType.ADMIN)) {
+            return Pair.of("User does not have permissions", HttpStatus.BAD_REQUEST);
+        }
+
+        return Pair.of(userRepository.findUserByUserType(UserType.ADMIN), HttpStatus.OK);
     }
 
-    public List<User> findCashiers() {
-        return userRepository.findUserByUserType(UserType.CASHIER);
+    public Pair<?, HttpStatus> findCashiers(User user) {
+        User foundUsers = findUserByCredentials(user.getUserName(), user.getPasswordHash());
+        if(foundUsers.getLoggedIn().equals(Boolean.FALSE)) {
+            return Pair.of("User is not logged in", HttpStatus.BAD_REQUEST);
+        }
+        if(!foundUsers.getUserType().equals(UserType.ADMIN)) {
+            return Pair.of("User does not have permissions", HttpStatus.BAD_REQUEST);
+        }
+
+        return Pair.of(userRepository.findUserByUserType(UserType.CASHIER), HttpStatus.OK);
     }
 
     public Pair<String, HttpStatus> addNewUser(User user) {
