@@ -1,6 +1,7 @@
 package com.example.Assignment1.user;
 
 import jakarta.persistence.*;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Base64;
 
@@ -30,6 +31,15 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserType userType;
 
+    @Column(nullable = false)
+    @Value("false")
+    private Boolean loggedIn;
+
+    @Transient
+    private String newName;
+    @Transient
+    private String newPassword;
+
     public User() {
     }
 
@@ -37,6 +47,7 @@ public class User {
         this.userName = userName;
         this.passwordHash = Base64.getEncoder().encodeToString(passwordHash.getBytes());
         this.userType = userType;
+        this.loggedIn = Boolean.FALSE;
     }
 
     public Long getId() {
@@ -74,5 +85,29 @@ public class User {
     public boolean isMatchingPassword(String passwordHash) {
         String candidateHash = Base64.getEncoder().encodeToString(passwordHash.getBytes());
         return candidateHash.equals(passwordHash);
+    }
+
+    public Boolean getLoggedIn() {
+        return loggedIn;
+    }
+
+    public void setLoggedIn(Boolean loggedIn) {
+        this.loggedIn = loggedIn;
+    }
+
+    public String getNewName() {
+        return newName;
+    }
+
+    public void setNewName(String newName) {
+        this.newName = newName;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
     }
 }
