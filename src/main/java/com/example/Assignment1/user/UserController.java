@@ -6,9 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Base64;
-import java.util.List;
-
 @RestController
 @RequestMapping(path = "api/v1/user")
 public class UserController {
@@ -64,8 +61,13 @@ public class UserController {
 
     @PostMapping("/admin/add")
     public ResponseEntity<?> addUser(@RequestBody User user) {
-        // TODO: validate
         Pair<String, HttpStatus> pair = userService.addNewUser(user);
+        return new ResponseEntity<>(pair.getFirst(), pair.getSecond());
+    }
+
+    @DeleteMapping("/admin/delete")
+    public ResponseEntity<?> deleteUser(@RequestBody User user) {
+        Pair<String, HttpStatus> pair = userService.deleteUser(user);
         return new ResponseEntity<>(pair.getFirst(), pair.getSecond());
     }
 

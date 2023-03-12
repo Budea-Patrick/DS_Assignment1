@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Base64;
 import java.util.List;
@@ -102,6 +100,18 @@ public class UserService {
         foundUser.setPasswordHash(Base64.getEncoder().encodeToString(user.getNewPassword().getBytes()));
         userRepository.save(foundUser);
         return Pair.of("User has been updated", HttpStatus.OK);
+    }
+
+    public Pair<String, HttpStatus> deleteUser(User user) {
+        String userName = user.getUserName();
+
+        User foundUser = userRepository.findUserByUserName(userName);
+        if(foundUser == null) {
+            return Pair.of("User cannot be found.", HttpStatus.BAD_REQUEST);
+        }
+
+        userRepository.delete(foundUser);
+        return Pair.of("User has been deleted", HttpStatus.OK);
     }
 
 }
