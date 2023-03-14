@@ -11,13 +11,13 @@ public class User {
 
     @Id
     @SequenceGenerator(
-            name = "ticket_sequence",
-            sequenceName = "ticket_sequence",
+            name = "user_sequence",
+            sequenceName = "user_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "student_sequence"
+            generator = "user_sequence"
     )
     private Long id;
 
@@ -48,6 +48,13 @@ public class User {
         this.passwordHash = Base64.getEncoder().encodeToString(passwordHash.getBytes());
         this.userType = userType;
         this.loggedIn = Boolean.FALSE;
+    }
+
+    public User(String userName, String passwordHash, UserType userType, Boolean loggedIn) {
+        this.userName = userName;
+        this.passwordHash = Base64.getEncoder().encodeToString(passwordHash.getBytes());
+        this.userType = userType;
+        this.loggedIn = loggedIn;
     }
 
     public Long getId() {

@@ -1,10 +1,16 @@
 package com.example.Assignment1.user;
 
+import com.example.Assignment1.concert.Concert;
+import com.example.Assignment1.ticket.Ticket;
+import com.example.Assignment1.utils.UserConcertHolder;
+import com.example.Assignment1.utils.UserTicketHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping(path = "api/v1/user")
@@ -65,4 +71,54 @@ public class UserController {
         return new ResponseEntity<>(pair.getFirst(), pair.getSecond());
     }
 
+    @PostMapping("/admin/concert/add")
+    public ResponseEntity<String> addConcert(@RequestBody Concert concert) {
+        Pair<String, HttpStatus> pair = userService.createConcert(concert);
+        return new ResponseEntity<>(pair.getFirst(), pair.getSecond());
+    }
+
+    @DeleteMapping("/admin/concert/delete")
+    public ResponseEntity<String> deleteConcert(@RequestBody Concert concert) {
+        Pair<String, HttpStatus> pair = userService.deleteConcert(concert);
+        return new ResponseEntity<>(pair.getFirst(), pair.getSecond());
+    }
+
+    @GetMapping("/admin/concert/all")
+    public ResponseEntity<?> getConcerts() {
+        Pair<?, HttpStatus> pair = userService.findConcerts();
+        return new ResponseEntity<>(pair.getFirst(), pair.getSecond());
+    }
+
+    @PutMapping("/admin/concert/update")
+    public ResponseEntity<?> getConcerts(@RequestBody Concert concert) {
+        Pair<?, HttpStatus> pair = userService.updateConcert(concert);
+        return new ResponseEntity<>(pair.getFirst(), pair.getSecond());
+    }
+
+    @PostMapping("cashier/sell")
+    public ResponseEntity<?> sellTicket(@RequestBody UserTicketHolder
+                                                userTicketHolder) {
+        User user = userTicketHolder.getUser();
+        Ticket ticket = userTicketHolder.getTicket();
+        Pair<?, HttpStatus> pair = userService.sellTicket(user, ticket);
+        return new ResponseEntity<>(pair.getFirst(), pair.getSecond());
+    }
+
+    @GetMapping("admin/export")
+    public ResponseEntity<?> exportTickets(@RequestBody UserConcertHolder
+                                                   userConcertHolder) throws IOException {
+        User user = userConcertHolder.getUser();
+        Concert concert = userConcertHolder.getConcert();
+        Pair<?, HttpStatus> pair = userService.exportTickets(user, concert);
+        return new ResponseEntity<>(pair.getFirst(), pair.getSecond());
+    }
+
+    @GetMapping("cashier/list")
+    public ResponseEntity<?> listTickets(@RequestBody UserConcertHolder
+                                                 userConcertHolder) throws IOException {
+        User user = userConcertHolder.getUser();
+        Concert concert = userConcertHolder.getConcert();
+        Pair<?, HttpStatus> pair = userService.listTicketsForConcert(user, concert);
+        return new ResponseEntity<>(pair.getFirst(), pair.getSecond());
+    }
 }
