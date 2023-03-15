@@ -1,0 +1,82 @@
+[ {
+  "id" : 1,
+  "price" : 100,
+  "concert" : {
+    "id" : 1,
+    "artists" : [ {
+      "id" : 4,
+      "name" : "Blues band"
+    }, {
+      "id" : 1,
+      "name" : "Folk band"
+    } ],
+    "genre" : "Blues",
+    "date" : "2020-12-01 20:00:00",
+    "title" : "Midnight Blues",
+    "tickets" : 20000
+  },
+  "user" : {
+    "id" : 2,
+    "userName" : "Dan",
+    "passwordHash" : "MjAwMTEwMDJwYXA=",
+    "userType" : "CASHIER",
+    "loggedIn" : true,
+    "newName" : null,
+    "newPassword" : null
+  },
+  "ticketsBought" : 50
+}, {
+  "id" : 2,
+  "price" : 100,
+  "concert" : {
+    "id" : 1,
+    "artists" : [ {
+      "id" : 4,
+      "name" : "Blues band"
+    }, {
+      "id" : 1,
+      "name" : "Folk band"
+    } ],
+    "genre" : "Blues",
+    "date" : "2020-12-01 20:00:00",
+    "title" : "Midnight Blues",
+    "tickets" : 20000
+  },
+  "user" : {
+    "id" : 2,
+    "userName" : "Dan",
+    "passwordHash" : "MjAwMTEwMDJwYXA=",
+    "userType" : "CASHIER",
+    "loggedIn" : true,
+    "newName" : null,
+    "newPassword" : null
+  },
+  "ticketsBought" : 50
+}, {
+  "id" : 3,
+  "price" : 100,
+  "concert" : {
+    "id" : 1,
+    "artists" : [ {
+      "id" : 4,
+      "name" : "Blues band"
+    }, {
+      "id" : 1,
+      "name" : "Folk band"
+    } ],
+    "genre" : "Blues",
+    "date" : "2020-12-01 20:00:00",
+    "title" : "Midnight Blues",
+    "tickets" : 20000
+  },
+  "user" : {
+    "id" : 2,
+    "userName" : "Dan",
+    "passwordHash" : "MjAwMTEwMDJwYXA=",
+    "userType" : "CASHIER",
+    "loggedIn" : true,
+    "newName" : null,
+    "newPassword" : null
+  },
+  "ticketsBought" : 50
+} ]

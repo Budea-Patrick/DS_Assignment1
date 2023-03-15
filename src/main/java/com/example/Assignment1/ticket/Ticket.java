@@ -43,6 +43,9 @@ public class Ticket {
         this.user = user;
         this.ticketsBought = ticketsBought;
     }
+    public Ticket() {
+
+    }
 
     public Long getId() {
         return id;
